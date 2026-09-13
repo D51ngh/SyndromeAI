@@ -1,7 +1,7 @@
 import stim
 
 
-def build_surface_code(distance: int = 3, rounds: int = 3) -> stim.Circuit:
+def build_surface_code(distance=3, rounds=3):
     if distance < 3 or distance % 2 == 0:
         raise ValueError("distance must be an odd integer >= 3")
     if rounds < 1:

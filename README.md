@@ -1,21 +1,18 @@
-# SyndromeAI: QEC Fault Forensics
+# SyndromeAI / QEC Fault Forensics
 
-This repository studies whether surface-code detector histories can identify
-and localize circuit-level faults. Phase I compares three controlled classes:
-`none`, measurement faults, and CNOT faults.
+Phase 1 asks whether detector patterns from a Stim surface-code memory can
+distinguish a known measurement fault from a known CNOT fault. Each sample
+stores detector events and the ground-truth fault metadata.
 
-The model input is detector data only. The injected fault metadata is kept as
-ground truth for training and evaluation. The first pipeline is intentionally
-small and reproducible before adding persistent noise, overlapping faults,
-unknown-fault detection, or decoder adaptation.
-
-## Quick start
+## Run
 
 ```bash
-python -m pip install -r requirements.txt
-python -m src.simulation.generate_samples --output data/raw/phase1 --samples-per-class 100
-python -m src.baselines.correlation_analysis --input data/raw/phase1
-python -m src.training.train_classifier --input data/raw/phase1
+python -m pip install stim numpy pandas scikit-learn pymatching
+python src/generate_dataset.py --output data/raw/phase1 --samples-per-class 100
+python src/inspect_detector_patterns.py --input data/raw/phase1
+python src/baseline_classifier.py --input data/raw/phase1
 ```
 
-Run tests with `pytest`. See `paper/` and `configs/` for the research plan.
+The first experiment uses one controlled fault in an otherwise noiseless
+distance-3 circuit. It is a diagnostic baseline, not a claim that microscopic
+hardware causes are uniquely identifiable from syndrome data.

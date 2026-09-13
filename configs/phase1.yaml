@@ -2,3 +2,7 @@ distance: 3
 rounds: 3
 samples_per_class: 100
 seed: 1234
+classes:
+  - none
+  - measurement
+  - cnot
